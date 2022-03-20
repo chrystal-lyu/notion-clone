@@ -1,9 +1,25 @@
-const BlockMenu = () => {
+import { FC } from "react";
+
+export type BlockType = "heading1" | "heading2" | "text";
+
+export interface BlockMenuProps {
+  onSelect: (payload: BlockType) => void;
+}
+
+const menu: BlockType[] = ["heading1", "heading2", "text"];
+
+const BlockMenu: FC<BlockMenuProps> = ({ onSelect }) => {
   return (
     <div id="block-menu">
-      <div className="block-menu-item">heading 1</div>
-      <div className="block-menu-item">heading 2</div>
-      <div className="block-menu-item">text</div>
+      {menu.map((item, i) => (
+        <div
+          key={i}
+          onClick={() => onSelect(item)}
+          className="block-menu-item"
+        >
+          {item}
+        </div>
+      ))}
     </div>
   );
 };

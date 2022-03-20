@@ -83,7 +83,7 @@ const EditablePage = () => {
               return null;
           }
         })}
-        {showBlockMenu && <BlockMenu />}
+        {showBlockMenu && <BlockMenu onSelect={() => []} />}
       </div>
     </div>
   );
