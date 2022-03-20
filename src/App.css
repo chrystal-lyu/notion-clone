@@ -30,10 +30,10 @@ html {
 }
 
 .block-item {
-  background-color: #f6f6f6;
+  background-color: #fafafa;
   padding: 8px;
   margin: 4px auto;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 #block-menu {
