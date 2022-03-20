@@ -97,6 +97,7 @@ const EditablePage = () => {
                   id={block.id}
                   key={block.id}
                   title={block.properties.title}
+                  totalBlocks={blocks.length}
                   onAddBlock={addBlock}
                   onDeleteBlock={deleteBlock}
                   onUpdateBlockType={updateBlockType}

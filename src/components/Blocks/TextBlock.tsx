@@ -5,6 +5,7 @@ import BlockMenu, { BlockType } from "../BlockMenu";
 export interface TextBlockProps {
   id: string;
   title: string;
+  totalBlocks: number;
   onAddBlock: (payload: BlockPayload) => void;
   onDeleteBlock: (payload: BlockPayload) => void;
   onUpdateBlockType: (id: string, type: BlockType) => void;
@@ -18,6 +19,7 @@ export interface BlockPayload {
 const TextBlock: FC<TextBlockProps> = ({
   id,
   title,
+  totalBlocks,
   onAddBlock,
   onDeleteBlock,
   onUpdateBlockType,
@@ -33,10 +35,12 @@ const TextBlock: FC<TextBlockProps> = ({
       e.preventDefault();
       onAddBlock({ id, ref: textBlockRef.current });
     }
-    if (e.key === "Backspace" && titleContent === "") {
-      e.preventDefault();
+    if (e.key === "Backspace") {
       setIsMenuVisible(false);
-      onDeleteBlock({ id, ref: textBlockRef.current });
+      if (titleContent === "" && totalBlocks > 1) {
+        e.preventDefault();
+        onDeleteBlock({ id, ref: textBlockRef.current });
+      }
     }
   };
 
