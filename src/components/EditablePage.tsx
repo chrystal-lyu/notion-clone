@@ -3,29 +3,21 @@ import { v4 as uid } from "uuid";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import { BlockType } from "./BlockMenu";
 import Heading1Block from "./Blocks/Heading1Block";
-import Heading2Block from "./Blocks/Heading2Block";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
 
 const initialBlocks = [
   {
     id: uid(),
     type: "heading1",
-    properties: { title: "Heading 1" },
+    properties: { title: "Element.nextElementSibling" },
   },
   {
     id: uid(),
     type: "text",
-    properties: { title: "text paragraph" },
-  },
-  {
-    id: uid(),
-    type: "text",
-    properties: { title: "text paragraph 2" },
-  },
-  {
-    id: uid(),
-    type: "text",
-    properties: { title: "" },
+    properties: {
+      title:
+        "The Element.nextElementSibling read-only property returns the element immediately following the specified one in its parent's children list, or null if the specified element is the last one in the list.",
+    },
   },
 ];
 
@@ -116,14 +108,6 @@ const EditablePage = () => {
                   onAddBlock={addBlock}
                   onDeleteBlock={deleteBlock}
                   onUpdateBlockType={updateBlockType}
-                />
-              );
-            case "heading2":
-              return (
-                <Heading2Block
-                  key={block.id}
-                  id={block.id}
-                  title={block.properties.title}
                 />
               );
             default:
