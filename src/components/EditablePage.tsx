@@ -1,4 +1,4 @@
-import { RefObject, useState } from "react";
+import { useState } from "react";
 import { v4 as uid } from "uuid";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import BlockMenu from "./BlockMenu";
@@ -28,22 +28,28 @@ const EditablePage = () => {
   const [blocks, setBlocks] = useState(initialBlocks);
   const [showBlockMenu, setShowBlockMenu] = useState(false);
 
-  const focusNextElement = (ref: RefObject<HTMLDivElement>) => {
-    ref && (ref.current?.nextElementSibling as HTMLElement).focus();
+  const focusNextElement = (el: HTMLDivElement | null) => {
+    (el?.nextElementSibling as HTMLElement).focus();
   };
 
-  const focusPreviousElement = (ref: RefObject<HTMLDivElement>) => {
-    ref && (ref.current?.previousElementSibling as HTMLElement).focus();
+  const focusPreviousElement = (el: HTMLDivElement | null) => {
+    (el?.nextElementSibling as HTMLElement).focus();
   };
 
   const addBlock = (currentBlock: BlockPayload) => {
     const newBlock = { id: uid(), type: "text", properties: { title: "" } };
-    setBlocks((prev) => [...prev, newBlock]);
-    focusNextElement(currentBlock.ref);
+    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
+    const updatedBlocks = [...blocks];
+    updatedBlocks.splice(index + 1, 0, newBlock);
+    setBlocks(updatedBlocks);
+    // temporary hack for focusing next block
+    setTimeout(() => {
+      focusNextElement(currentBlock.ref);
+    }, 50);
   };
 
   const deleteBlock = (currentBlock: BlockPayload) => {
-    const previousBlock = currentBlock.ref.current?.previousElementSibling;
+    const previousBlock = currentBlock.ref?.previousElementSibling;
     const updatedBlock = blocks.filter((block) => block.id !== currentBlock.id);
     setBlocks(updatedBlock);
     focusPreviousElement(currentBlock.ref);
