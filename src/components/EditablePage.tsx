@@ -1,5 +1,6 @@
 import { RefObject, useState } from "react";
 import { v4 as uid } from "uuid";
+import { setCaretToEnd } from "../utils/setCaretToEnd";
 import BlockMenu from "./BlockMenu";
 import Heading1Block from "./Blocks/Heading1Block";
 import Heading2Block from "./Blocks/Heading2Block";
@@ -42,9 +43,11 @@ const EditablePage = () => {
   };
 
   const deleteBlock = (currentBlock: BlockPayload) => {
+    const previousBlock = currentBlock.ref.current?.previousElementSibling;
     const updatedBlock = blocks.filter((block) => block.id !== currentBlock.id);
     setBlocks(updatedBlock);
     focusPreviousElement(currentBlock.ref);
+    setCaretToEnd(previousBlock as HTMLElement);
   };
 
   return (

@@ -1,4 +1,12 @@
-import { FC, useRef, KeyboardEvent, RefObject } from "react";
+import {
+  FC,
+  useRef,
+  KeyboardEvent,
+  RefObject,
+  useState,
+  FormEvent,
+} from "react";
+import { setCaretToEnd } from "../../utils/setCaretToEnd";
 
 export interface TextBlockProps {
   id: string;
@@ -21,12 +29,14 @@ const TextBlock: FC<TextBlockProps> = ({
   deleteBlock,
 }) => {
   const textBlockRef = useRef(null);
+  const [titleContent, setTitleContent] = useState<string>(title);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "/") {
       showMenu(true);
     }
-    if (e.key === "Backspace") {
+    if (e.key === "Backspace" && titleContent === "") {
+      e.preventDefault();
       showMenu(false);
       deleteBlock({ id, ref: textBlockRef });
     }
@@ -36,16 +46,22 @@ const TextBlock: FC<TextBlockProps> = ({
     }
   };
 
+  const handleInput = (e: FormEvent<HTMLDivElement>) => {
+    setTitleContent(e.currentTarget.textContent || "");
+    setCaretToEnd(e.currentTarget);
+  };
+
   return (
     <div
       id={id}
       className="block-item"
       ref={textBlockRef}
       onKeyDown={handleKeyDown}
+      onInput={(e) => handleInput(e)}
       contentEditable
       suppressContentEditableWarning={true}
     >
-      {title}
+      {titleContent}
     </div>
   );
 };
