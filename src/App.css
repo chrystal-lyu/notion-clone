@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  color: #333333;
 }
 
 *,
@@ -12,11 +13,27 @@ html {
   padding: 24px;
 }
 
+.page-header {
+  background-color: #eaf2fa;
+  padding: 24px;
+  max-width: 633px;
+  margin: 16px auto;
+  border-radius: 8px;
+}
+
+.page-header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
 .block-item {
   background-color: #f6f6f6;
   padding: 8px;
-  margin: 4px;
+  margin: 4px auto;
   border-radius: 2px;
+  max-width: 633px;
 }
 
 #block-menu {
