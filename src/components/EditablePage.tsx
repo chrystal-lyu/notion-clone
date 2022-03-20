@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uid } from "uuid";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import { BlockType } from "./BlockMenu";
@@ -37,7 +37,7 @@ const EditablePage = () => {
   };
 
   const focusPreviousElement = (el: HTMLDivElement | null) => {
-    (el?.nextElementSibling as HTMLElement).focus();
+    (el?.previousElementSibling as HTMLElement).focus();
   };
 
   const addBlock = (currentBlock: BlockPayload) => {
@@ -54,8 +54,11 @@ const EditablePage = () => {
 
   const deleteBlock = (currentBlock: BlockPayload) => {
     const previousBlock = currentBlock.ref?.previousElementSibling;
-    const updatedBlock = blocks.filter((block) => block.id !== currentBlock.id);
-    setBlocks(updatedBlock);
+    // const updatedBlock = blocks.filter((block) => block.id !== currentBlock.id);
+    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
+    const updatedBlocks = [...blocks];
+    updatedBlocks.splice(index, 1);
+    setBlocks(updatedBlocks);
     focusPreviousElement(currentBlock.ref);
     setCaretToEnd(previousBlock as HTMLElement);
   };
@@ -109,6 +112,7 @@ const EditablePage = () => {
                   id={block.id}
                   key={block.id}
                   title={block.properties.title}
+                  totalBlocks={blocks.length}
                   onAddBlock={addBlock}
                   onDeleteBlock={deleteBlock}
                   onUpdateBlockType={updateBlockType}

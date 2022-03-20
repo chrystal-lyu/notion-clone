@@ -27,6 +27,7 @@ const TextBlock: FC<TextBlockProps> = ({
   const textBlockRef = useRef(null);
   const [titleContent, setTitleContent] = useState<string>(title);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "/") {
       setIsMenuVisible(true);

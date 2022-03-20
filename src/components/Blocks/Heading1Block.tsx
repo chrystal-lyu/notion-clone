@@ -5,13 +5,10 @@ import BlockMenu, { BlockType } from "../BlockMenu";
 export interface TextBlockProps {
   id: string;
   title: string;
+  totalBlocks: number;
   onAddBlock: (payload: BlockPayload) => void;
   onDeleteBlock: (payload: BlockPayload) => void;
-  onUpdateBlockType: (
-    id: string,
-    type: BlockType,
-    ref: HTMLDivElement | null
-  ) => void;
+  onUpdateBlockType: (id: string, type: BlockType) => void;
 }
 
 export interface BlockPayload {
@@ -22,6 +19,7 @@ export interface BlockPayload {
 const Heading1Block: FC<TextBlockProps> = ({
   id,
   title,
+  totalBlocks,
   onAddBlock,
   onDeleteBlock,
   onUpdateBlockType,
@@ -29,6 +27,7 @@ const Heading1Block: FC<TextBlockProps> = ({
   const textBlockRef = useRef(null);
   const [titleContent, setTitleContent] = useState<string>(title);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "/") {
       setIsMenuVisible(true);
@@ -37,10 +36,12 @@ const Heading1Block: FC<TextBlockProps> = ({
       e.preventDefault();
       onAddBlock({ id, ref: textBlockRef.current });
     }
-    if (e.key === "Backspace" && titleContent === "") {
-      e.preventDefault();
+    if (e.key === "Backspace") {
       setIsMenuVisible(false);
-      onDeleteBlock({ id, ref: textBlockRef.current });
+      if (titleContent === "" && totalBlocks > 1) {
+        e.preventDefault();
+        onDeleteBlock({ id, ref: textBlockRef.current });
+      }
     }
   };
 
@@ -51,7 +52,7 @@ const Heading1Block: FC<TextBlockProps> = ({
 
   const handleSelect = (payload: BlockType) => {
     setIsMenuVisible(false);
-    onUpdateBlockType(id, payload, textBlockRef.current);
+    onUpdateBlockType(id, payload);
   };
 
   return (
