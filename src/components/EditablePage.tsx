@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uid } from "uuid";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
-import BlockMenu from "./BlockMenu";
+import { BlockType } from "./BlockMenu";
 import Heading1Block from "./Blocks/Heading1Block";
 import Heading2Block from "./Blocks/Heading2Block";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
@@ -20,13 +20,17 @@ const initialBlocks = [
   {
     id: uid(),
     type: "text",
+    properties: { title: "text paragraph 2" },
+  },
+  {
+    id: uid(),
+    type: "text",
     properties: { title: "" },
   },
 ];
 
 const EditablePage = () => {
   const [blocks, setBlocks] = useState(initialBlocks);
-  const [showBlockMenu, setShowBlockMenu] = useState(false);
 
   const focusNextElement = (el: HTMLDivElement | null) => {
     (el?.nextElementSibling as HTMLElement).focus();
@@ -56,28 +60,57 @@ const EditablePage = () => {
     setCaretToEnd(previousBlock as HTMLElement);
   };
 
+  const updateBlockType = (id: string, type: BlockType) => {
+    const updatedBlock = blocks.map((item) => {
+      if (item.id === id) {
+        return {
+          id: item.id,
+          type,
+          properties: item.properties,
+        };
+      } else {
+        return {
+          id: item.id,
+          type: item.type,
+          properties: item.properties,
+        };
+      }
+    });
+    setBlocks(updatedBlock);
+  };
+
   return (
     <div>
       <div className="page">
+        <div className="page-header">
+          <div className="page-header-title">
+            <span style={{ fontSize: 42, marginRight: 8 }}>📖</span>
+            <div>Notion Clone</div>
+          </div>
+          <div>What's on your mind?</div>
+        </div>
         {blocks.map((block) => {
           switch (block.type) {
             case "text":
               return (
                 <TextBlock
-                  key={block.id}
                   id={block.id}
+                  key={block.id}
                   title={block.properties.title}
-                  addBlock={addBlock}
-                  deleteBlock={deleteBlock}
-                  showMenu={setShowBlockMenu}
+                  onAddBlock={addBlock}
+                  onDeleteBlock={deleteBlock}
+                  onUpdateBlockType={updateBlockType}
                 />
               );
             case "heading1":
               return (
                 <Heading1Block
-                  key={block.id}
                   id={block.id}
+                  key={block.id}
                   title={block.properties.title}
+                  onAddBlock={addBlock}
+                  onDeleteBlock={deleteBlock}
+                  onUpdateBlockType={updateBlockType}
                 />
               );
             case "heading2":
@@ -92,7 +125,6 @@ const EditablePage = () => {
               return null;
           }
         })}
-        {showBlockMenu && <BlockMenu onSelect={() => []} />}
       </div>
     </div>
   );
