@@ -1,6 +1,5 @@
 import { FC } from "react";
-
-export type BlockTypeOption = "heading1" | "text";
+import { BlockTypeOption } from "../types/BlockType";
 
 export interface BlockMenuProps {
   onSelect: (option: BlockTypeOption) => void;
