@@ -1,4 +1,11 @@
-import { FC, useRef, KeyboardEvent, useState, FormEvent } from "react";
+import {
+  FC,
+  useRef,
+  KeyboardEvent,
+  useState,
+  FormEvent,
+  useEffect,
+} from "react";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
 import BlockMenu, { BlockTypeOption } from "../BlockMenu";
 
@@ -60,6 +67,10 @@ const TextBlock: FC<TextBlockProps> = ({
     setIsMenuVisible(false);
     onUpdateBlockType({ id, type, title: titleContent });
   };
+
+  useEffect(() => {
+    textBlockRef.current && (textBlockRef.current as HTMLDivElement).focus();
+  }, [textBlockRef]);
 
   const titleStyle = {
     fontSize: subType === "heading1" ? "1.875rem" : "1rem",

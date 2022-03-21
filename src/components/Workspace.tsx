@@ -1,31 +1,26 @@
 import { useState } from "react";
 import { v4 as uid } from "uuid";
 
-import { BlockType } from "../types/BlockType";
 import { focusPreviousElement } from "../utils/focusNextElement";
-import { focusNextElement } from "../utils/focustPreviousElement";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import { initialBlocks } from "../constants/InitialBlocks";
 import { BlockTypeOption } from "./BlockMenu";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
+import { BlockType } from "../types/BlockType";
 
 const Workspace = () => {
   const [blocks, setBlocks] = useState(initialBlocks);
 
   const addBlock = (currentBlock: BlockPayload) => {
-    const newBlock: BlockType = {
+    const newDefaultBlock: BlockType = {
       id: uid(),
       type: "text",
       properties: { title: "" },
     };
     const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
     const updatedBlocks = [...blocks];
-    updatedBlocks.splice(index + 1, 0, newBlock);
+    updatedBlocks.splice(index + 1, 0, newDefaultBlock);
     setBlocks(updatedBlocks);
-    // temporary hack for focusing next block
-    setTimeout(() => {
-      focusNextElement(currentBlock.ref);
-    }, 50);
   };
 
   const deleteBlock = (currentBlock: BlockPayload) => {
