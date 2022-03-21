@@ -1,38 +1,23 @@
 import { useState } from "react";
 import { v4 as uid } from "uuid";
+
+import { BlockType } from "../types/BlockType";
+import { focusPreviousElement } from "../utils/focusNextElement";
+import { focusNextElement } from "../utils/focustPreviousElement";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
+import { initialBlocks } from "../constants/InitialBlocks";
 import { BlockTypeOption } from "./BlockMenu";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
 
-const initialBlocks = [
-  {
-    id: uid(),
-    type: "heading1",
-    properties: { title: "Element.nextElementSibling" },
-  },
-  {
-    id: uid(),
-    type: "text",
-    properties: {
-      title:
-        "The Element.nextElementSibling read-only property returns the element immediately following the specified one in its parent's children list, or null if the specified element is the last one in the list.",
-    },
-  },
-];
-
-const EditablePage = () => {
+const Workspace = () => {
   const [blocks, setBlocks] = useState(initialBlocks);
 
-  const focusNextElement = (el: HTMLDivElement | null) => {
-    (el?.nextElementSibling as HTMLElement).focus();
-  };
-
-  const focusPreviousElement = (el: HTMLDivElement | null) => {
-    (el?.previousElementSibling as HTMLElement).focus();
-  };
-
   const addBlock = (currentBlock: BlockPayload) => {
-    const newBlock = { id: uid(), type: "text", properties: { title: "" } };
+    const newBlock: BlockType = {
+      id: uid(),
+      type: "text",
+      properties: { title: "" },
+    };
     const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
     const updatedBlocks = [...blocks];
     updatedBlocks.splice(index + 1, 0, newBlock);
@@ -114,4 +99,4 @@ const EditablePage = () => {
   );
 };
 
-export default EditablePage;
+export default Workspace;
