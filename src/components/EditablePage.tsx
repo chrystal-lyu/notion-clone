@@ -2,7 +2,6 @@ import { useState } from "react";
 import { v4 as uid } from "uuid";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import { BlockTypeOption } from "./BlockMenu";
-import Heading1Block from "./Blocks/Heading1Block";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
 
 const initialBlocks = [
@@ -93,22 +92,12 @@ const EditablePage = () => {
         {blocks.map((block) => {
           switch (block.type) {
             case "text":
-              return (
-                <TextBlock
-                  id={block.id}
-                  key={block.id}
-                  title={block.properties.title}
-                  totalBlocks={blocks.length}
-                  onAddBlock={addBlock}
-                  onDeleteBlock={deleteBlock}
-                  onUpdateBlockType={updateBlockType}
-                />
-              );
             case "heading1":
               return (
-                <Heading1Block
-                  id={block.id}
+                <TextBlock
                   key={block.id}
+                  id={block.id}
+                  subType={block.type}
                   title={block.properties.title}
                   totalBlocks={blocks.length}
                   onAddBlock={addBlock}

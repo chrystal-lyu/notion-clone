@@ -6,6 +6,7 @@ export interface TextBlockProps {
   id: string;
   title: string;
   totalBlocks: number;
+  subType?: "heading1" | "text";
   onAddBlock: (payload: BlockPayload) => void;
   onDeleteBlock: (payload: BlockPayload) => void;
   onUpdateBlockType: (payload: {
@@ -23,6 +24,7 @@ export interface BlockPayload {
 const TextBlock: FC<TextBlockProps> = ({
   id,
   title,
+  subType = "text",
   totalBlocks,
   onAddBlock,
   onDeleteBlock,
@@ -59,6 +61,11 @@ const TextBlock: FC<TextBlockProps> = ({
     onUpdateBlockType({ id, type, title: titleContent });
   };
 
+  const titleStyle = {
+    fontSize: subType === "heading1" ? "1.875rem" : "1rem",
+    fontWeight: subType === "heading1" ? 700 : 400,
+  };
+
   return (
     <>
       <div
@@ -67,6 +74,7 @@ const TextBlock: FC<TextBlockProps> = ({
         ref={textBlockRef}
         onKeyDown={handleKeyDown}
         onInput={(e) => handleInput(e)}
+        style={titleStyle}
         contentEditable
         suppressContentEditableWarning={true}
       >
