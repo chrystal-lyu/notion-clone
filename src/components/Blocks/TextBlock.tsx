@@ -1,13 +1,19 @@
 import { FC, useRef, KeyboardEvent, useState, FormEvent } from "react";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
-import BlockMenu, { BlockType } from "../BlockMenu";
+import BlockMenu, { BlockTypeOption } from "../BlockMenu";
 
 export interface TextBlockProps {
   id: string;
   title: string;
+  totalBlocks: number;
+  subType?: "heading1" | "text";
   onAddBlock: (payload: BlockPayload) => void;
   onDeleteBlock: (payload: BlockPayload) => void;
-  onUpdateBlockType: (id: string, type: BlockType) => void;
+  onUpdateBlockType: (payload: {
+    id: string;
+    type: BlockTypeOption;
+    title: string;
+  }) => void;
 }
 
 export interface BlockPayload {
@@ -18,6 +24,8 @@ export interface BlockPayload {
 const TextBlock: FC<TextBlockProps> = ({
   id,
   title,
+  subType = "text",
+  totalBlocks,
   onAddBlock,
   onDeleteBlock,
   onUpdateBlockType,
@@ -25,6 +33,7 @@ const TextBlock: FC<TextBlockProps> = ({
   const textBlockRef = useRef(null);
   const [titleContent, setTitleContent] = useState<string>(title);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "/") {
       setIsMenuVisible(true);
@@ -33,10 +42,12 @@ const TextBlock: FC<TextBlockProps> = ({
       e.preventDefault();
       onAddBlock({ id, ref: textBlockRef.current });
     }
-    if (e.key === "Backspace" && titleContent === "") {
-      e.preventDefault();
+    if (e.key === "Backspace") {
       setIsMenuVisible(false);
-      onDeleteBlock({ id, ref: textBlockRef.current });
+      if (titleContent === "" && totalBlocks > 1) {
+        e.preventDefault();
+        onDeleteBlock({ id, ref: textBlockRef.current });
+      }
     }
   };
 
@@ -45,9 +56,14 @@ const TextBlock: FC<TextBlockProps> = ({
     setCaretToEnd(e.currentTarget);
   };
 
-  const handleSelect = (payload: BlockType) => {
+  const handleSelect = (type: BlockTypeOption) => {
     setIsMenuVisible(false);
-    onUpdateBlockType(id, payload);
+    onUpdateBlockType({ id, type, title: titleContent });
+  };
+
+  const titleStyle = {
+    fontSize: subType === "heading1" ? "1.875rem" : "1rem",
+    fontWeight: subType === "heading1" ? 700 : 400,
   };
 
   return (
@@ -58,6 +74,7 @@ const TextBlock: FC<TextBlockProps> = ({
         ref={textBlockRef}
         onKeyDown={handleKeyDown}
         onInput={(e) => handleInput(e)}
+        style={titleStyle}
         contentEditable
         suppressContentEditableWarning={true}
       >

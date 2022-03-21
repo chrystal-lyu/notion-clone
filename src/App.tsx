@@ -1,5 +1,5 @@
 import "./App.css";
-import EditablePage from "./components/EditablePage";
+import EditablePage from "./components/Workspace";
 
 const App = () => {
   return (

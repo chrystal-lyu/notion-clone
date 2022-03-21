@@ -10,13 +10,14 @@ html {
 }
 
 .page {
-  padding: 24px;
+  max-width: 633px;
+  margin: 48px auto;
+  position: relative;
 }
 
 .page-header {
   background-color: #eaf2fa;
   padding: 24px;
-  max-width: 633px;
   margin: 16px auto;
   border-radius: 8px;
 }
@@ -29,11 +30,10 @@ html {
 }
 
 .block-item {
-  background-color: #f6f6f6;
+  background-color: #fafafa;
   padding: 8px;
   margin: 4px auto;
-  border-radius: 2px;
-  max-width: 633px;
+  border-radius: 4px;
 }
 
 #block-menu {
@@ -42,6 +42,9 @@ html {
   width: 180px;
   box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.25);
   border: 1px solid #e3e3e3;
+  position: absolute;
+  left: 0;
+  background-color: white;
 }
 
 .block-menu-item {
