@@ -66,9 +66,9 @@ const Workspace = () => {
 
   return (
     <div>
-      <div className="page">
-        <div className="page-header">
-          <div className="page-header-title">
+      <div className="workspace">
+        <div className="workspace-header">
+          <div className="workspace-header-title">
             <span style={{ fontSize: 42, marginRight: 8 }}>📖</span>
             <div>git checkout -b feature/Notion</div>
           </div>
