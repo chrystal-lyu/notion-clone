@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uid } from "uuid";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
-import { BlockType } from "./BlockMenu";
+import { BlockTypeOption } from "./BlockMenu";
 import Heading1Block from "./Blocks/Heading1Block";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
 
@@ -46,7 +46,6 @@ const EditablePage = () => {
 
   const deleteBlock = (currentBlock: BlockPayload) => {
     const previousBlock = currentBlock.ref?.previousElementSibling;
-    // const updatedBlock = blocks.filter((block) => block.id !== currentBlock.id);
     const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
     const updatedBlocks = [...blocks];
     updatedBlocks.splice(index, 1);
@@ -55,13 +54,20 @@ const EditablePage = () => {
     setCaretToEnd(previousBlock as HTMLElement);
   };
 
-  const updateBlockType = (id: string, type: BlockType) => {
+  const updateBlockType = (payload: {
+    id: string;
+    type: BlockTypeOption;
+    title: string;
+  }) => {
     const updatedBlock = blocks.map((item) => {
-      if (item.id === id) {
+      if (item.id === payload.id) {
         return {
           id: item.id,
-          type,
-          properties: item.properties,
+          type: payload.type,
+          properties: {
+            ...item.properties,
+            title: payload.title,
+          },
         };
       } else {
         return {
@@ -80,7 +86,7 @@ const EditablePage = () => {
         <div className="page-header">
           <div className="page-header-title">
             <span style={{ fontSize: 42, marginRight: 8 }}>📖</span>
-            <div>Notion Clone</div>
+            <div>git checkout -b feature/Notion</div>
           </div>
           <div>What's on your mind?</div>
         </div>

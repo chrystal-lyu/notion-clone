@@ -1,6 +1,6 @@
 import { FC, useRef, KeyboardEvent, useState, FormEvent } from "react";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
-import BlockMenu, { BlockType } from "../BlockMenu";
+import BlockMenu, { BlockTypeOption } from "../BlockMenu";
 
 export interface TextBlockProps {
   id: string;
@@ -8,7 +8,11 @@ export interface TextBlockProps {
   totalBlocks: number;
   onAddBlock: (payload: BlockPayload) => void;
   onDeleteBlock: (payload: BlockPayload) => void;
-  onUpdateBlockType: (id: string, type: BlockType) => void;
+  onUpdateBlockType: (payload: {
+    id: string;
+    type: BlockTypeOption;
+    title: string;
+  }) => void;
 }
 
 export interface BlockPayload {
@@ -50,9 +54,9 @@ const Heading1Block: FC<TextBlockProps> = ({
     setCaretToEnd(e.currentTarget);
   };
 
-  const handleSelect = (payload: BlockType) => {
+  const handleSelect = (type: BlockTypeOption) => {
     setIsMenuVisible(false);
-    onUpdateBlockType(id, payload);
+    onUpdateBlockType({ id, type, title: titleContent });
   };
 
   return (
