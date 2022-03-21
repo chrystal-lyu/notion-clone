@@ -11,14 +11,14 @@ export const initialState: State = {
     {
       id: uid(),
       type: "heading1",
-      properties: { title: "Element.nextElementSibling" },
+      properties: { title: "Hello World" },
     },
     {
       id: uid(),
       type: "text",
       properties: {
         title:
-          "The Element.nextElementSibling read-only property returns the element immediately following the specified one in its parent's children list, or null if the specified element is the last one in the list.",
+          "Type something here...",
       },
     },
   ],

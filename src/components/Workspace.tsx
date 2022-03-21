@@ -38,7 +38,7 @@ const Workspace = () => {
         <div className="workspace-header">
           <div className="workspace-header-title">
             <span style={{ fontSize: 42, marginRight: 8 }}>📖</span>
-            <div>git checkout -b feature/Notion</div>
+            <div>feature/Notion</div>
           </div>
           <div>What's on your mind?</div>
         </div>
