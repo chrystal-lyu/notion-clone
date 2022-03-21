@@ -6,8 +6,9 @@ import {
   FormEvent,
   useEffect,
 } from "react";
+import { BlockTypeOption } from "../../types/BlockType";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
-import BlockMenu, { BlockTypeOption } from "../BlockMenu";
+import BlockMenu from "../BlockMenu";
 
 export interface TextBlockProps {
   id: string;

@@ -1,3 +1,5 @@
+export type BlockTypeOption = "heading1" | "text";
+
 export interface TextBlock {
   type: "text";
   id: string;

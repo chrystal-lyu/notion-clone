@@ -1,35 +1,21 @@
-import { useState } from "react";
-import { v4 as uid } from "uuid";
+import { useReducer } from "react";
 
-import { focusPreviousElement } from "../utils/focusNextElement";
 import { setCaretToEnd } from "../utils/setCaretToEnd";
-import { initialBlocks } from "../constants/InitialBlocks";
-import { BlockTypeOption } from "./BlockMenu";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
-import { BlockType } from "../types/BlockType";
+import { blockReducer, initialState } from "../store/blockReducer";
+import { BlockTypeOption } from "../types/BlockType";
 
 const Workspace = () => {
-  const [blocks, setBlocks] = useState(initialBlocks);
+  const [state, dispatch] = useReducer(blockReducer, initialState);
 
   const addBlock = (currentBlock: BlockPayload) => {
-    const newDefaultBlock: BlockType = {
-      id: uid(),
-      type: "text",
-      properties: { title: "" },
-    };
-    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
-    const updatedBlocks = [...blocks];
-    updatedBlocks.splice(index + 1, 0, newDefaultBlock);
-    setBlocks(updatedBlocks);
+    dispatch({ type: "ADD_BLOCK", id: currentBlock.id });
   };
 
   const deleteBlock = (currentBlock: BlockPayload) => {
+    dispatch({ type: "DELETE_BLOCK", id: currentBlock.id });
+
     const previousBlock = currentBlock.ref?.previousElementSibling;
-    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
-    const updatedBlocks = [...blocks];
-    updatedBlocks.splice(index, 1);
-    setBlocks(updatedBlocks);
-    focusPreviousElement(currentBlock.ref);
     setCaretToEnd(previousBlock as HTMLElement);
   };
 
@@ -38,25 +24,12 @@ const Workspace = () => {
     type: BlockTypeOption;
     title: string;
   }) => {
-    const updatedBlock = blocks.map((item) => {
-      if (item.id === payload.id) {
-        return {
-          id: item.id,
-          type: payload.type,
-          properties: {
-            ...item.properties,
-            title: payload.title,
-          },
-        };
-      } else {
-        return {
-          id: item.id,
-          type: item.type,
-          properties: item.properties,
-        };
-      }
+    dispatch({
+      type: "UPDATE_BLOCK",
+      id: payload.id,
+      blockType: payload.type,
+      title: payload.title,
     });
-    setBlocks(updatedBlock);
   };
 
   return (
@@ -69,7 +42,7 @@ const Workspace = () => {
           </div>
           <div>What's on your mind?</div>
         </div>
-        {blocks.map((block) => {
+        {state.blocks.map((block) => {
           switch (block.type) {
             case "text":
             case "heading1":
@@ -79,7 +52,7 @@ const Workspace = () => {
                   id={block.id}
                   subType={block.type}
                   title={block.properties.title}
-                  totalBlocks={blocks.length}
+                  totalBlocks={state.blocks.length}
                   onAddBlock={addBlock}
                   onDeleteBlock={deleteBlock}
                   onUpdateBlockType={updateBlockType}

@@ -2,11 +2,7 @@ import "./App.css";
 import EditablePage from "./components/Workspace";
 
 const App = () => {
-  return (
-    <div>
-      <EditablePage />
-    </div>
-  );
-}
+  return <EditablePage />;
+};
 
 export default App;
