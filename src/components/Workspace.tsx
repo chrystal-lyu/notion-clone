@@ -2,7 +2,7 @@ import { useReducer } from "react";
 
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
-import { blockReducer, initialState } from "../store/blockReducer";
+import { blockReducer, initialState } from "../reducers/blockReducer";
 import { BlockTypeOption } from "../types/BlockType";
 
 const Workspace = () => {
