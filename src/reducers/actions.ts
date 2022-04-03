@@ -1,4 +1,4 @@
-import { BlockTypeOption } from "./../types/BlockType";
+import { BlockTypeOption } from "../types/block";
 import { ADD_BLOCK, DELETE_BLOCK, UPDATE_BLOCK } from "./actionTypes";
 
 export const addBlock = (id: string) => ({
