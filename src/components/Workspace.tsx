@@ -1,12 +1,14 @@
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 
 import { setCaretToEnd } from "../utils/setCaretToEnd";
 import TextBlock, { BlockPayload } from "./Blocks/TextBlock";
 import { blockReducer, initialState } from "../reducers/blockReducer";
 import { BlockTypeOption } from "../types/block";
 import ThemeToggle from "./ThemeToggle";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Workspace = () => {
+  const { theme } = useContext(ThemeContext);
   const [state, dispatch] = useReducer(blockReducer, initialState);
 
   const addBlock = (currentBlock: BlockPayload) => {
@@ -34,9 +36,9 @@ const Workspace = () => {
   };
 
   return (
-    <div>
+    <div className="wrapper" data-theme={theme}>
       <div className="workspace">
-        <div className="workspace-header">
+        <div className="workspace-header" data-theme={theme}>
           <div className="workspace-header-title">
             <span style={{ fontSize: 42, marginRight: 8 }}>📖</span>
             <div>feature/Notion</div>

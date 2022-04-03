@@ -5,7 +5,9 @@ import {
   useState,
   FormEvent,
   useEffect,
+  useContext,
 } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 import { BlockTypeOption } from "../../types/block";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
 import BlockMenu from "../BlockMenu";
@@ -38,6 +40,7 @@ const TextBlock: FC<TextBlockProps> = ({
   onDeleteBlock,
   onUpdateBlockType,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const textBlockRef = useRef(null);
   const [titleContent, setTitleContent] = useState<string>(title);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -83,6 +86,7 @@ const TextBlock: FC<TextBlockProps> = ({
       <div
         id={id}
         className="block-item"
+        data-theme={theme}
         ref={textBlockRef}
         onKeyDown={handleKeyDown}
         onInput={(e) => handleInput(e)}
