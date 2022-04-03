@@ -1,4 +1,4 @@
-import { BlockTypeOption } from "../types/BlockType";
+import { BlockTypeOption } from "../types/block";
 
 export const ADD_BLOCK = "ADD_BLOCK";
 export const DELETE_BLOCK = "DELETE_BLOCK";

@@ -1,8 +1,13 @@
 import "./App.css";
-import EditablePage from "./components/Workspace";
+import Workspace from "./components/Workspace";
+import ThemeProvider from "./context/ThemeContext";
 
 const App = () => {
-  return <EditablePage />;
+  return (
+    <ThemeProvider>
+      <Workspace />
+    </ThemeProvider>
+  );
 };
 
 export default App;

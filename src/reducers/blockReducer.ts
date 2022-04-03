@@ -1,4 +1,4 @@
-import { BlockType } from "../types/BlockType";
+import { BlockType } from "../types/block";
 import { v4 as uid } from "uuid";
 import { Action, ADD_BLOCK, DELETE_BLOCK, UPDATE_BLOCK } from "./actionTypes";
 

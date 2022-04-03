@@ -6,7 +6,7 @@ import {
   FormEvent,
   useEffect,
 } from "react";
-import { BlockTypeOption } from "../../types/BlockType";
+import { BlockTypeOption } from "../../types/block";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
 import BlockMenu from "../BlockMenu";
 
