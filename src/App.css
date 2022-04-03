@@ -9,6 +9,17 @@ html {
   box-sizing: inherit;
 }
 
+.wrapper {
+  background: #fafafa;
+  padding: 48px;
+  min-height: 100vh;
+}
+
+[data-theme='dark'].wrapper {
+  background: #1a1a1a;
+  color: #fff;
+}
+
 .workspace {
   max-width: 633px;
   margin: 48px auto;
@@ -24,6 +35,10 @@ html {
   border-radius: 8px;
 }
 
+[data-theme='dark'].workspace-header {
+  background-color: #2f455c;
+}
+
 .workspace-header-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -32,10 +47,14 @@ html {
 }
 
 .block-item {
-  background-color: #fafafa;
+  background-color: #f1f1f1;
   padding: 8px;
   margin: 4px auto;
   border-radius: 4px;
+}
+
+[data-theme='dark'].block-item {
+  background-color: #2c2c2c;
 }
 
 #block-menu {
