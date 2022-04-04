@@ -1,19 +1,22 @@
-export type BlockTypeOption = "heading1" | "text";
+export type BlockTypeOption = "heading1" | "heading2" | "text";
 
-export interface TextBlock {
+interface BlockBaseType {
+  id: string;
+  properties: {
+    title: string;
+  };
+}
+
+interface TextBlockType extends BlockBaseType {
   type: "text";
-  id: string;
-  properties: {
-    title: string;
-  };
 }
 
-export interface Heading1Block {
+interface HeaderBlockType extends BlockBaseType {
   type: "heading1";
-  id: string;
-  properties: {
-    title: string;
-  };
 }
 
-export type BlockType = TextBlock | Heading1Block;
+interface SubHeaderBlockType extends BlockBaseType {
+  type: "heading2";
+}
+
+export type BlockType = TextBlockType | HeaderBlockType | SubHeaderBlockType;

@@ -50,6 +50,7 @@ const Workspace = () => {
           switch (block.type) {
             case "text":
             case "heading1":
+            case "heading2":
               return (
                 <TextBlock
                   key={block.id}

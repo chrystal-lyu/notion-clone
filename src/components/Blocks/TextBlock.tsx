@@ -10,13 +10,14 @@ import {
 import { ThemeContext } from "../../context/ThemeContext";
 import { BlockTypeOption } from "../../types/block";
 import { setCaretToEnd } from "../../utils/setCaretToEnd";
+import { fontSize, fontWeight } from "../../utils/titleStyle";
 import BlockMenu from "../BlockMenu";
 
 export interface TextBlockProps {
   id: string;
   title: string;
   totalBlocks: number;
-  subType?: "heading1" | "text";
+  subType?: BlockTypeOption;
   onAddBlock: (payload: BlockPayload) => void;
   onDeleteBlock: (payload: BlockPayload) => void;
   onUpdateBlockType: (payload: {
@@ -77,8 +78,8 @@ const TextBlock: FC<TextBlockProps> = ({
   }, [textBlockRef]);
 
   const titleStyle = {
-    fontSize: subType === "heading1" ? "1.875rem" : "1rem",
-    fontWeight: subType === "heading1" ? 700 : 400,
+    fontSize: fontSize(subType),
+    fontWeight: fontWeight(subType),
   };
 
   return (
@@ -96,7 +97,7 @@ const TextBlock: FC<TextBlockProps> = ({
       >
         {titleContent}
       </div>
-      {isMenuVisible && <BlockMenu onSelect={handleSelect} />}
+      {isMenuVisible && <BlockMenu theme={theme} onSelect={handleSelect} />}
     </>
   );
 };
